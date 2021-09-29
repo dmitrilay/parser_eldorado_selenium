@@ -7,4 +7,4 @@ options_web = {
 }
 
 # file_path = "C:/Users/dmitr/OneDrive/Документы/1_Parser/mts.xlsx"
-file_path = "D:/eld.xlsx"
+file_path = "D:/eldorado.xlsx"
