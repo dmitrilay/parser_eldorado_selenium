@@ -1,12 +1,9 @@
 from time import sleep
-import selenium
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-import os
-import datetime
-from openpyxl import Workbook, load_workbook
 from settings import *
+from different import *
 
 
 def web():
@@ -53,7 +50,7 @@ def web():
     ch = webdriver.Chrome(name_ch, options=options)
 
     ch.get("https://www.eldorado.ru/c/smartfony/")
-    select_city('Омск', ch)
+    # select_city('Омск', ch)
     sleep(4)
 
     while permission:
@@ -85,26 +82,5 @@ def web():
     return dict_product
 
 
-def writing_file_excel(price_list, name_f):
-    """ Входные данные - словарь"""
-    # head, tail = os.path.split(__file__)
-    # current_time = datetime.datetime.now().strftime("%d-%m-%y_%H-%M") + '_'
-    # name_f = os.path.normpath(f'{head}/data/{name_f}_{current_time}.xlsx')
-    # name_f = os.path.normpath(f'{head}/data/{name_f}.xlsx')
-    name_f = os.path.normpath(name_f)
-    wb = Workbook()
-    ws = wb.active
-    row = 1
-    for key, value_list in price_list.items():
-        ws.cell(row=row, column=1, value=key)
-        column = 2
-        for value in value_list:
-            ws.cell(row=row, column=column, value=value)
-            column += 1
-        row += 1
-
-    wb.save(filename=name_f)
-
-
 data = web()
-writing_file_excel(data, file_path)
+writing_file_excel(data, external_folder)
