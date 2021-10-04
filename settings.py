@@ -1,10 +1,15 @@
 import os
 import datetime
 
+URLs = [
+    'https://www.eldorado.ru/c/smartfony/',
+    'https://www.eldorado.ru/c/televizory/',
+]
+
 options_web = {
-    # 'profile.managed_default_content_settings.javascript': 2,
+    'profile.managed_default_content_settings.javascript': 2,
     'profile.managed_default_content_settings.images': 2,
-    # 'profile.managed_default_content_settings.mixed_script': 2,
+    'profile.managed_default_content_settings.mixed_script': 2,
     'profile.managed_default_content_settings.media_stream': 2,
     'profile.managed_default_content_settings.stylesheets': 2
 }
