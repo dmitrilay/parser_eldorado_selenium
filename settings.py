@@ -14,6 +14,8 @@ options_web = {
     'profile.managed_default_content_settings.stylesheets': 2
 }
 
+
+
 # file_path = "C:/Users/dmitr/OneDrive/Документы/1_Parser/mts.xlsx"
 # name_f = os.path.normpath(f'{head}/data/{name_f}.xlsx')
 
