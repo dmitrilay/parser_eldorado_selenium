@@ -50,7 +50,7 @@ def web():
     options.add_experimental_option('prefs', options_web)
     # options.add_argument("--user-agent=New User Agent")
     ch = webdriver.Chrome(name_ch, options=options)
-
+    print(ch)
     ch.get("https://www.eldorado.ru")
     sleep(5)
     select_city('Омск', ch)
@@ -60,6 +60,7 @@ def web():
         permission = True
         ch.get(url)
         while permission:
+            # sleep(5)
             sleep(5)
             try:  # Если каких то данных нет то ждем
                 products = ch.find_elements_by_xpath('//*[@id="listing-container"]/ul/li')
@@ -71,6 +72,11 @@ def web():
                 name_tag = ch.find_element_by_xpath(xp1).get_attribute('class').split(' ')
                 xp1 = '//*[@id="listing-container"]/ul/li[1]/div[3]/div[1]/span'
                 price_tag = ch.find_element_by_xpath(xp1).get_attribute('class').split(' ')
+                xp1 = '//*[@id="listing-container"]/ul/li[1]/div[3]/div/div[1]/span[1]'
+                try:
+                    availability_tag = ch.find_element_by_xpath(xp1).get_attribute('class').split(' ')
+                except:
+                    availability_tag = ''
 
                 for i in products:
                     name_product = i.find_element_by_class_name(name_tag[0]).text
@@ -78,7 +84,13 @@ def web():
                         price_product = i.find_element_by_class_name(price_tag[0]).text
                     else:
                         price_product = 0
-                    dict_product[name_product] = [price_product]
+
+                    availability = ''
+                    if availability_tag != '':
+                        if i.find_elements_by_class_name(availability_tag[0]):
+                            availability = i.find_element_by_class_name(availability_tag[0]).text
+
+                    dict_product[name_product] = [price_product, availability]
 
                 if page_number >= end_page():  # Проверка когда нужно закончить скрапинг
                     permission = False
@@ -87,10 +99,10 @@ def web():
                     print('Следующая страница №', page_number)
                     ch.get(f"{url}?page={page_number}")
                     error_count = 0
-            except:
+            except Exception as e:
                 sleep(2)
                 error_count += 1
-                print('Ошибка', error_count)
+                print('Ошибка', error_count, e)
                 if error_count > 5:
                     ch.get(f"{url}?page={page_number}")
                     sleep(5)
