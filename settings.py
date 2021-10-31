@@ -3,7 +3,7 @@ import datetime
 
 URLs = [
     'https://www.eldorado.ru/c/smartfony/',
-    # 'https://www.eldorado.ru/c/televizory/',
+    'https://www.eldorado.ru/c/televizory/',
 ]
 
 options_web = {

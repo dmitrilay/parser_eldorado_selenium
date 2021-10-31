@@ -49,10 +49,11 @@ def web():
     options = Options()
     options.add_experimental_option('prefs', options_web)
     # options.add_argument("--user-agent=New User Agent")
+
     ch = webdriver.Chrome(name_ch, options=options)
-    print(ch)
+    ch.set_window_size(1024, 768)
     ch.get("https://www.eldorado.ru")
-    sleep(5)
+    sleep(1)
     select_city('Омск', ch)
 
     for url in URLs:
@@ -60,13 +61,9 @@ def web():
         permission = True
         ch.get(url)
         while permission:
-            # sleep(5)
-            sleep(5)
+            sleep(3)
             try:  # Если каких то данных нет то ждем
                 products = ch.find_elements_by_xpath('//*[@id="listing-container"]/ul/li')
-                if len(products) == 0:
-                    permission = False
-                    break
 
                 xp1 = '//*[@id="listing-container"]/ul/li[1]/div[2]/a'
                 name_tag = ch.find_element_by_xpath(xp1).get_attribute('class').split(' ')
@@ -105,7 +102,6 @@ def web():
                 print('Ошибка', error_count, e)
                 if error_count > 5:
                     ch.get(f"{url}?page={page_number}")
-                    sleep(5)
     ch.close()
     return dict_product
 
